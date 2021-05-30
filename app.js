@@ -2,13 +2,12 @@
 #NOTE To connect to db make sure you have node (runs javascript on backend) and npm (package manager) 
 installed on your computer
 
-Steps to Run
-  1. Below, change the connection parameters "db_name" to what you set in MySQL
-  2. Open up this project's directory in cmd
-  3. run the command "npm install mysql"
-  4. run the command "npm install dotenv --save"
-  5. Create a file called ".env" and create variable for password
-  6. run the command "node app.js"
+Steps to Connect to DB
+  1. Below, change the connection parameters "user", "database" to what you set in MySQL
+  2. Open up cmd.exe in project & run the command "npm install" to install project dependencies
+  5. Create a file called ".env" in the project root folder
+  4. In your .env, put the line: PASS=Your-Pass-Word-Here
+  6. run the command "node app.js" and in the console you should see the data from the query
 */
 
 const mysql = require("mysql"); // import statement (make sure you do step 3. above)
