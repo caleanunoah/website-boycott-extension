@@ -1,4 +1,6 @@
 # dont track this file bc it contains passwords
-pass.*
+.env
+
 # dont track node modules
 /node_modules
+

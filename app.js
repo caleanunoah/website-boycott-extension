@@ -3,22 +3,22 @@
 installed on your computer
 
 Steps to Run
-  1. Below, change the connection parameters "pass" and "db_name" to what you set in MySQL
+  1. Below, change the connection parameters "db_name" to what you set in MySQL
   2. Open up this project's directory in cmd
   3. run the command "npm install mysql"
-  4. run the command "node app.js"
+  4. run the command "npm install dotenv --save"
+  5. Create a file called ".env" and create variable for password
+  6. run the command "node app.js"
 */
 
 const mysql = require("mysql"); // import statement (make sure you do step 3. above)
-
-const db_name = 'boycott'     // Change to whatever youve named your db in MySQL
-const pass = 'password here'
+require('dotenv').config();     // for password
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',             // if you changed the user name in MySQL, change this too but you prob left it as default 
-    password: pass,
-    database: db_name
+    user: 'root',               // if you changed the user name in MySQL, change this too but you prob left it as default 
+    password: process.env.PASS, // variable from .env file
+    database: 'boycott'         // change to your db's name in MySQL
 });
 
 // Print if connection succeeded or failed
