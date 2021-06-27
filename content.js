@@ -9,12 +9,16 @@ var banned_names = [
   "benandjerrys",
   "benandjerry",
   "ben-jerrys",
-]
+] 
+
+
 
 window.onload = (event) => {
   
+  
   // get url of current tab
   var currentLocation = window.location.href;
+  console.log(currentLocation)
 
   // _________________________________________________________________________________________________
   //

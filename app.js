@@ -11,7 +11,10 @@ Steps to Connect to DB
 */
 
 const mysql = require("mysql"); // import statement (make sure you do step 3. above)
+const async = require('async');
 require('dotenv').config();     // for password
+
+var myrows = []
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -20,6 +23,7 @@ const connection = mysql.createConnection({
     database: 'boycott'         // change to your db's name in MySQL
 });
 
+/*
 // Print if connection succeeded or failed
 connection.connect((err) => {
     if(err){
@@ -30,16 +34,50 @@ connection.connect((err) => {
 });
 
 // Query to get data. I have a table called "urls" which I popualted with test data.
-connection.query('SELECT * FROM urls', (err,rows) => {
+
+connection.query('SELECT * FROM urls', (err, rows, fields) => {
     if(err) throw err;
   
+    
     // You will see this in the command line window (NOT a browser)
-    console.log('Data received from Db:');
-    console.log(rows);
+    console.log('Data received from Db: ', rows);
+    
   });
-
 
 // Terminate the connection after query
 connection.end((err) => {
-
 });
+*/
+
+
+// ---------------------------------------------------------------------------------------------
+
+async.waterfall([
+  function(callback) {
+    connection.connect(function(err){
+      if (err) {
+        throw err;
+        return;
+        }
+      
+      console.log("Async Connection");
+      connection.query('SELECT * FROM urls', function(err, result) {
+        if (err) throw err;
+  
+        result.forEach(function(item) {
+          myrows.push(item)
+        });
+        callback(null, myrows);
+        connection.end((err) => { });
+      });
+    });
+    
+  }
+  
+],
+function(err, myrows){
+  console.log("my rows: ", myrows)
+  return myrows
+});
+
+

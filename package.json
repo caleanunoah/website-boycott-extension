@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/caleanunoah/website-boycott-extension#readme",
   "dependencies": {
+    "async": "^3.2.0",
     "dotenv": "^10.0.0",
     "mysql": "^2.18.1"
   }
