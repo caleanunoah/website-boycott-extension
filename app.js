@@ -3,7 +3,8 @@
 
 Serverside file to start a static express server, open up connection to database, and send data to client browser (through port 3000).
 
-# Note: for instructions on how to run this file, see the README.md
+# Note: for instructions on how to run this file:
+        Refer to README.md https://github.com/caleanunoah/website-boycott-extension/blob/main/README.md
 */
 
 require('dotenv').config();         // Set up the env file to use password.
