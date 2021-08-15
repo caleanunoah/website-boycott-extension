@@ -31,4 +31,3 @@
 
    * Browser:
    <img src="https://user-images.githubusercontent.com/43590970/129491727-950e7c30-6dbb-459c-9f23-57f5eb3551cb.png" height="150" width="auto">
-

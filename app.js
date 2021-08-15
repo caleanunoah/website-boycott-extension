@@ -1,55 +1,58 @@
 /*
-#NOTE To connect to db make sure you have node (runs javascript on backend) and npm (package manager) 
-installed on your computer
+@author Noah Caleanu
 
-Steps to Connect to DB
-  1. Below, change the connection parameters "user", "database" to what you set in MySQL
-  2. Open up cmd.exe in project & run the command "npm install" to install project dependencies
-  5. Create a file called ".env" in the project root folder
-  4. In your .env, put the line: PASS=Your-Pass-Word-Here
-  6. run the command "node app.js" and in the console you should see the data from the query
+Serverside file to start a static express server, open up connection to database, and send data to client browser (through port 3000).
+
+# Note: for instructions on how to run this file, see the README.md
 */
 
-require('dotenv').config();     // for password
+require('dotenv').config();         // Set up the env file to use password.
 
-const mysql = require("mysql"); // import statement (make sure you do step 3. above)
-const async = require('async');
-const express = require("express");
+const mysql = require("mysql");     // import the driver that connects to sql db
+const async = require('async');     // import driver to run async functions (can't use synchronous bc we have to WAIT for data to be returned)
+const express = require("express"); // import driver for express server that will receive data from serverside and send to clientside
 
 
-const app = express();
-const port = 3000;
-//console.log(app)
+const app = express();              // Start the Server
+const port = 3000;                  // Port that the express server should listen for data
 
-var myrows = []
+var myrows = []                       // List of url's that will be returned from SQL db
+var pass = "mySQL password"
+var pass = process.env.PASS           // variable from .env file. If you do not have one, just comment out this line and use the above variable.
 
+// First must connect to SQL database. Ensure your mySQL server is running (see github readme)
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',               // if you changed the user name in MySQL, change this too but you prob left it as default 
-    password: process.env.PASS, // variable from .env file
-    database: 'boycott'         // change to your db's name in MySQL
+    host: 'localhost',                // Dont change
+    user: 'root',                     // Dont change
+    password: pass,                   // Either variable from .env file or local string 
+    database: 'boycott'               // Change to your db's name in MySQL
 });
 
 
+// Express Server is ready to get data and send to front end now.
 app.get('/', (req, res) => {
-  var test = []
 
-  // query db here
+  // Waterfall will run 2 async functions
   async.waterfall([
+    
+    // First async function
     function(callback) {
+      // Connect to database
       connection.connect(function(err){
         if (err) {
           throw err;
-          return;
           }
-        
-        console.log("Async Connection");
+        // Print that you have connected successfully
+        console.log("Async Connection Success");
+        // Query the database to retrieve all rows from table "urls"
         connection.query('SELECT * FROM urls', function(err, result) {
           if (err) throw err;
     
+          // For each row, add to list
           result.forEach(function(item) {
             myrows.push(item)
           });
+          // End connection to database
           callback(null, myrows);
           connection.end((err) => { });
         });
@@ -58,84 +61,25 @@ app.get('/', (req, res) => {
     }
     
   ],
+  // Second function that runs to send sql data to front end (client side browser)
   function(err, myrows){
+    // Display data in terminal
     console.log("my rows: ", myrows)
+
     // send db rows to front end with send method
-
-    //
-
     res.send(myrows)
   });
 
   
 })
 
+// Express server is listening for data coming to the backend on port (specified at top of file)
 app.listen(port, () => {
   console.log("Server listening on port: " + String(port))
 })
 
 
 
-/*
-// Print if connection succeeded or failed
-connection.connect((err) => {
-    if(err){
-        console.log('Error connecting to Db');
-        return;
-      }
-      console.log('Connection established');
-});
-
-// Query to get data. I have a table called "urls" which I popualted with test data.
-
-connection.query('SELECT * FROM urls', (err, rows, fields) => {
-    if(err) throw err;
-  
-    
-    // You will see this in the command line window (NOT a browser)
-    console.log('Data received from Db: ', rows);
-    
-  });
-
-// Terminate the connection after query
-connection.end((err) => {
-});
-*/
-
-
-// ---------------------------------------------------------------------------------------------
-/*
-async.waterfall([
-  function(callback) {
-    connection.connect(function(err){
-      if (err) {
-        throw err;
-        return;
-        }
-      
-      console.log("Async Connection");
-      connection.query('SELECT * FROM urls', function(err, result) {
-        if (err) throw err;
-  
-        result.forEach(function(item) {
-          myrows.push(item)
-        });
-        callback(null, myrows);
-        connection.end((err) => { });
-      });
-    });
-    
-  }
-  
-],
-function(err, myrows){
-  console.log("my rows: ", myrows)
-
-  //var blob = new Blob(myrows, { type: "text/plain;charset=utf-8" });
-  //fileS.saveAs(blob, "dynamic.txt");
-  
-});
-*/
 
 
 
