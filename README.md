@@ -7,7 +7,7 @@
 ## File Breakdown
 * **app.js** is the server side script that starts an Express server (using driver "express"). Then it queries a SQL database (using the driver "mysql") and posts the data on localhost:3000 (must have localhost open for data to return from the sql connection)
 * **content.js** is the script that runs on the browser and executes everytime the page is refreshed
-* **index.html** is the extension content that can be viewed by
+* **index.html** is the extension content that pops up when clicking extension (see steps 1-4 to set this up)
 
 ## How to Run App
 
