@@ -19,7 +19,13 @@
   "homepage": "https://github.com/caleanunoah/website-boycott-extension#readme",
   "dependencies": {
     "async": "^3.2.0",
+    "blob": "^0.1.0",
+    "cross-blob": "^3.0.0",
     "dotenv": "^10.0.0",
-    "mysql": "^2.18.1"
+    "express": "^4.17.1",
+    "file-saver": "^2.0.5",
+    "mysql": "^2.18.1",
+    "redis": "^3.1.2",
+    "xmlhttprequest": "^1.8.0"
   }
 }

@@ -10,9 +10,16 @@ Steps to Connect to DB
   6. run the command "node app.js" and in the console you should see the data from the query
 */
 
+require('dotenv').config();     // for password
+
 const mysql = require("mysql"); // import statement (make sure you do step 3. above)
 const async = require('async');
-require('dotenv').config();     // for password
+const express = require("express");
+
+
+const app = express();
+const port = 3000;
+//console.log(app)
 
 var myrows = []
 
@@ -22,6 +29,52 @@ const connection = mysql.createConnection({
     password: process.env.PASS, // variable from .env file
     database: 'boycott'         // change to your db's name in MySQL
 });
+
+
+app.get('/', (req, res) => {
+  var test = []
+
+  // query db here
+  async.waterfall([
+    function(callback) {
+      connection.connect(function(err){
+        if (err) {
+          throw err;
+          return;
+          }
+        
+        console.log("Async Connection");
+        connection.query('SELECT * FROM urls', function(err, result) {
+          if (err) throw err;
+    
+          result.forEach(function(item) {
+            myrows.push(item)
+          });
+          callback(null, myrows);
+          connection.end((err) => { });
+        });
+      });
+      
+    }
+    
+  ],
+  function(err, myrows){
+    console.log("my rows: ", myrows)
+    // send db rows to front end with send method
+
+    //
+
+    res.send(myrows)
+  });
+
+  
+})
+
+app.listen(port, () => {
+  console.log("Server listening on port: " + String(port))
+})
+
+
 
 /*
 // Print if connection succeeded or failed
@@ -51,7 +104,7 @@ connection.end((err) => {
 
 
 // ---------------------------------------------------------------------------------------------
-
+/*
 async.waterfall([
   function(callback) {
     connection.connect(function(err){
@@ -77,7 +130,13 @@ async.waterfall([
 ],
 function(err, myrows){
   console.log("my rows: ", myrows)
-  return myrows
+
+  //var blob = new Blob(myrows, { type: "text/plain;charset=utf-8" });
+  //fileS.saveAs(blob, "dynamic.txt");
+  
 });
+*/
+
+
 
 
