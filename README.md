@@ -12,7 +12,7 @@
 ## How to Run App
 
 1. Clone the repo
-2. Navigate to [chrome extensions](chrome://extensions/)
+2. Navigate to chrome://extensions/ in your browser
 3. Click "Load unpacked" and select the cloned repo folder 
       * Extension should be visible now
       <img src="https://user-images.githubusercontent.com/43590970/129492056-28c29645-85f0-4eed-9b78-c65a015181c0.png" height="300" width="auto">
