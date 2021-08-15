@@ -31,3 +31,9 @@
 
    * Browser:
    <img src="https://user-images.githubusercontent.com/43590970/129491727-950e7c30-6dbb-459c-9f23-57f5eb3551cb.png" height="150" width="auto">
+   
+   
+ ## TroubleShooting
+ 
+ * If you need to start the SQL server see these steps (Windows)
+     <img src="https://user-images.githubusercontent.com/43590970/129492648-3f2457e0-7243-4d20-b453-aa9da2010b6e.png" height="150" width="auto">
